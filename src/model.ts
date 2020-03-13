@@ -1,11 +1,11 @@
 export const X = "X";
 export const O = "O";
 
-export type Space = "X" | "O" | null;
+export type Player = "X" | "O";
+
+export type Space = Player | null;
 
 export type Grid = Space[][];
-
-export type Player = "X" | "O";
 
 export type Model = {
   grid: Grid;
