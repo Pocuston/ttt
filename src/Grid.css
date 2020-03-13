@@ -19,7 +19,7 @@
   font-weight: bold;
 }
 
-.grid .space:hover {
+.grid .space.can-move:hover {
   cursor: pointer;
   background-color: antiquewhite;
 }

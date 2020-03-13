@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./Grid.css";
-import {Model, Position} from "./model";
+import {isValidMove, Model, Position} from "./model";
 
 type GridProps = {
   model: Model;
@@ -13,15 +13,19 @@ const Grid: React.FC<GridProps> = (props: GridProps) => {
   return (
     <div className={"grid"}>
       {model.grid.map((row, rowIndex) =>
-        row.map((col, colIndex) => (
-          <div
-            key={`${rowIndex}-${colIndex}`}
-            className={"space"}
-            onClick={() => onSpaceClick({ row: rowIndex, col: colIndex })}
-          >
-            {col}
-          </div>
-        ))
+        row.map((col, colIndex) => {
+          const position = { row: rowIndex, col: colIndex };
+          const canMove = isValidMove(model, position);
+          return (
+            <div
+              key={`${rowIndex}-${colIndex}`}
+              className={"space " + (canMove ? "can-move" : "")}
+              onClick={() => canMove && onSpaceClick(position)}
+            >
+              {col}
+            </div>
+          );
+        })
       )}
     </div>
   );
