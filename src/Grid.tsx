@@ -11,7 +11,13 @@ const Grid: React.FC<GridProps> = (props: GridProps) => {
   const { model } = props;
   return (
     <div className={"grid"}>
-      {model.grid.map(row => row.map(col => <div className={"space"}>O</div>))}
+      {model.grid.map((row, rowIndex) =>
+        row.map((col, colIndex) => (
+          <div key={`${rowIndex}-${colIndex}`} className={"space"}>
+            O
+          </div>
+        ))
+      )}
     </div>
   );
 };
