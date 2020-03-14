@@ -16,7 +16,7 @@ function getRandomPlayer(): Player {
 
 function makePlayerMove(model: Model, position: Position): Model {
   model = move(model, position);
-  let aiMove = resolveNextMove(model, model.playerOnMove);
+  let aiMove = resolveNextMove(model);
   model = move(model, aiMove);
   return model;
 }
