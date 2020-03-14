@@ -17,16 +17,15 @@ export type Position = {
   col: number;
 };
 
-export function createModel(): Model {
+export function createModel(playerOnMove: Player): Model {
   const grid = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
   ];
-  const onMove = O;
   return {
     grid,
-    playerOnMove: onMove
+    playerOnMove
   };
 }
 
@@ -38,7 +37,7 @@ export function move(model: Model, position: Position): Model {
   if (!isValidMove(model, position)) {
     throw Error("Invalid move");
   }
-  let grid = markSpace(model.grid, position, model.playerOnMove);
+  let grid = markSpace(model.grid, model.playerOnMove, position);
   let playerOnMove = switchPlayerOnMove(model.playerOnMove);
 
   return { grid, playerOnMove };
@@ -48,7 +47,7 @@ function switchPlayerOnMove(currentPlayer: Player): Player {
   return currentPlayer === O ? X : O;
 }
 
-function markSpace(currentGrid: Grid, position: Position, player: Player) {
+function markSpace(currentGrid: Grid, player: Player, position: Position) {
   const newGrid = [...currentGrid];
   newGrid[position.row][position.col] = player;
   return newGrid;
