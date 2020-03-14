@@ -9,7 +9,7 @@ export type Grid = Space[][];
 
 export type Model = {
   grid: Grid;
-  onMove: Player;
+  playerOnMove: Player;
 };
 
 export type Position = {
@@ -26,7 +26,7 @@ export function createModel(): Model {
   const onMove = O;
   return {
     grid,
-    onMove
+    playerOnMove: onMove
   };
 }
 
@@ -36,14 +36,15 @@ export function isValidMove(model: Model, position: Position): boolean {
 
 export function move(model: Model, position: Position): Model {
   if (!isValidMove(model, position)) {
-    return model;
+    throw Error("Invalid move");
   }
-  const grid = markSpace(model.grid, position, model.onMove);
-  const onMove = switchOnMove(model.onMove);
-  return { ...model, grid, onMove };
+  let grid = markSpace(model.grid, position, model.playerOnMove);
+  let playerOnMove = switchPlayerOnMove(model.playerOnMove);
+
+  return { grid, playerOnMove };
 }
 
-function switchOnMove(currentPlayer: Player): Player {
+function switchPlayerOnMove(currentPlayer: Player): Player {
   return currentPlayer === O ? X : O;
 }
 
@@ -51,4 +52,20 @@ function markSpace(currentGrid: Grid, position: Position, player: Player) {
   const newGrid = [...currentGrid];
   newGrid[position.row][position.col] = player;
   return newGrid;
+}
+
+export const gridPositions: Position[] = [
+  { row: 0, col: 0 },
+  { row: 0, col: 1 },
+  { row: 0, col: 2 },
+  { row: 1, col: 0 },
+  { row: 1, col: 1 },
+  { row: 1, col: 2 },
+  { row: 2, col: 0 },
+  { row: 2, col: 1 },
+  { row: 2, col: 2 }
+];
+
+export function spaceAt(model: Model, position: Position): Space {
+  return model.grid[position.row][position.col];
 }
