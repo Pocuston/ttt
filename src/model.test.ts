@@ -23,9 +23,9 @@ test("createModel() creates 3x3 grid", () => {
 });
 
 test("move() correctly changes space by player", () => {
-  const model = createModel(O);
+  let model = createModel(O);
   const player = model.playerOnMove;
-  move(model, { row: 2, col: 0 });
+  model = move(model, { row: 2, col: 0 });
 
   expect(model.grid[2][0]).toBe(player);
 });
