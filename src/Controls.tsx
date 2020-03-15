@@ -1,5 +1,5 @@
 import React from "react";
-import { GameResult } from "./model";
+import {GameResult, Player} from "./model";
 import "./Controls.css";
 
 type ControlsProps = {
@@ -7,12 +7,16 @@ type ControlsProps = {
   onPlayAgainClick: () => void;
 };
 
+function getGameResultText(gameResult: Player | "draw") {
+  return gameResult === "draw" ? <>Draw!</> : <>Player <span className={"player"}>{gameResult}</span> won.</>
+}
+
 const Controls: React.FC<ControlsProps> = props => {
   return (
     <section className={"controls"}>
       {props.gameResult !== null ? (
         <span className={"game-result"}>
-          Player <span className={"player"}>{props.gameResult}</span> won.{" "}
+          {getGameResultText(props.gameResult)}
           <button onClick={props.onPlayAgainClick}>Play again.</button>{" "}
         </span>
       ) : (

@@ -7,7 +7,7 @@ export type Space = Player | null;
 
 export type Grid = Space[][];
 
-export type GameResult = Player | null;
+export type GameResult = Player | "draw" | null;
 
 export type Model = {
   grid: Grid;
@@ -62,6 +62,7 @@ function markSpace(currentGrid: Grid, player: Player, position: Position) {
 }
 
 function computeGameResult(grid: Grid): GameResult {
+
   for (let i = 0; i < gridRows.length; i++) {
     if (hasPlayerThreeInRow(grid, O, gridRows[i])) {
       return O;
@@ -70,6 +71,9 @@ function computeGameResult(grid: Grid): GameResult {
       return X;
     }
   }
+
+  if (!isAnySpaceLeft(grid))
+    return "draw";
 
   return null;
 }
@@ -84,6 +88,10 @@ function hasPlayerThreeInRow(
     spaceAt(grid, row[1]) === player &&
     spaceAt(grid, row[2]) === player
   );
+}
+
+function isAnySpaceLeft(grid: Grid) {
+  return gridPositions.find(position => spaceAt(grid, position) === null) !== undefined;
 }
 
 export function spaceAt(grid: Grid, position: Position): Space {
