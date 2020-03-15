@@ -35,34 +35,37 @@ export function createModel(playerOnMove: Player): Model {
 }
 
 export function isValidMove(model: Model, position: Position): boolean {
-  return (
-    model.grid[position.row][position.col] === null && model.gameResult === null
-  );
+  return model.grid[position.row][position.col] === null;
 }
 
+//TODO prejmenovat na makeMove a v kodu pouzivat move misto position tam kde to dava smysl
 export function move(model: Model, position: Position): Model {
   if (!isValidMove(model, position)) {
     throw Error("Invalid move");
   }
   let grid = markSpace(model.grid, model.playerOnMove, position);
-  let playerOnMove = switchPlayerOnMove(model.playerOnMove);
-  let gameResult = computeGameResult(model.grid);
+  let playerOnMove = opponent(model.playerOnMove);
+  let gameResult = computeGameResult(grid);
 
   return { grid, playerOnMove, gameResult };
 }
 
-function switchPlayerOnMove(currentPlayer: Player): Player {
-  return currentPlayer === O ? X : O;
+export function opponent(player: Player): Player {
+  return player === O ? X : O;
 }
 
 function markSpace(currentGrid: Grid, player: Player, position: Position) {
-  const newGrid = [...currentGrid];
+  //to make copy of two dimensional array, spread operator must be used for each row instead of [...currentGrid] otherwise reference would be copied and reused
+  const newGrid: Grid = [
+    [...currentGrid[0]],
+    [...currentGrid[1]],
+    [...currentGrid[2]]
+  ];
   newGrid[position.row][position.col] = player;
   return newGrid;
 }
 
-function computeGameResult(grid: Grid): GameResult {
-
+export function computeGameResult(grid: Grid): GameResult {
   for (let i = 0; i < gridRows.length; i++) {
     if (hasPlayerThreeInRow(grid, O, gridRows[i])) {
       return O;
@@ -72,8 +75,7 @@ function computeGameResult(grid: Grid): GameResult {
     }
   }
 
-  if (!isAnySpaceLeft(grid))
-    return "draw";
+  if (!isAnySpaceLeft(grid)) return "draw";
 
   return null;
 }
@@ -91,7 +93,10 @@ function hasPlayerThreeInRow(
 }
 
 function isAnySpaceLeft(grid: Grid) {
-  return gridPositions.find(position => spaceAt(grid, position) === null) !== undefined;
+  return (
+    gridPositions.find(position => spaceAt(grid, position) === null) !==
+    undefined
+  );
 }
 
 export function spaceAt(grid: Grid, position: Position): Space {

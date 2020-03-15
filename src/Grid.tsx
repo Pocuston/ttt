@@ -15,7 +15,7 @@ const Grid: React.FC<GridProps> = (props: GridProps) => {
       {model.grid.map((row, rowIndex) =>
         row.map((col, colIndex) => {
           const position = { row: rowIndex, col: colIndex };
-          const canMove = isValidMove(model, position);
+          const canMove = model.gameResult === null && isValidMove(model, position);
           return (
             <div
               key={`${rowIndex}-${colIndex}`}
