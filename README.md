@@ -1,3 +1,7 @@
+# Tic Tac Toe
+
+Tic Tac Toe implemented using React & TypeScript and simple AI using minimax algorithm.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
