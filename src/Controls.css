@@ -4,3 +4,9 @@
   justify-content: center;
   height: 20vh;
 }
+
+.controls .game-result .player {
+  font-size: x-large;
+  font-weight: bold;
+  color: brown;
+}

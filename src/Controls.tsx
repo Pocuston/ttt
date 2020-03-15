@@ -12,7 +12,7 @@ const Controls: React.FC<ControlsProps> = props => {
     <section className={"controls"}>
       {props.gameResult !== null ? (
         <span className={"game-result"}>
-          Player {props.gameResult} won.{" "}
+          Player <span className={"player"}>{props.gameResult}</span> won.{" "}
           <button onClick={props.onPlayAgainClick}>Play again.</button>{" "}
         </span>
       ) : (
