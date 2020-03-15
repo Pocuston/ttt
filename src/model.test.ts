@@ -4,7 +4,7 @@ test("createModel() creates empty grid", () => {
   const model = createModel(O);
 
   gridPositions.forEach(position =>
-    expect(spaceAt(model, position)).toBe(null)
+    expect(spaceAt(model.grid, position)).toBe(null)
   );
 });
 
