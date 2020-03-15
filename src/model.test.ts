@@ -1,4 +1,11 @@
-import {createModel, gridPositions, isValidMove, move, O, spaceAt} from "./model";
+import {
+  createModel,
+  gridPositions,
+  isValidMove,
+  move,
+  O,
+  spaceAt
+} from "./model";
 
 test("createModel() creates empty grid", () => {
   const model = createModel(O);

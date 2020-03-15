@@ -1,5 +1,5 @@
-import {createModel, move, O} from "./model";
-import {resolveNextMove} from "./ai";
+import { createModel, move, O } from "./model";
+import { resolveNextMove } from "./ai";
 
 test("AI does always valid move", () => {
   let model = createModel(O);

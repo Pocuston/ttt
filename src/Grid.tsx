@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./Grid.css";
-import {isValidMove, Model, Position} from "./model";
+import { isValidMove, Model, Position } from "./model";
 
 type GridProps = {
   model: Model;
