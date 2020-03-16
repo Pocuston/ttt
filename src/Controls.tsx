@@ -1,5 +1,5 @@
 import React from "react";
-import {GameResult, Player} from "./model";
+import { GameResult, Player } from "./model";
 import "./Controls.css";
 
 type ControlsProps = {
@@ -8,7 +8,13 @@ type ControlsProps = {
 };
 
 function getGameResultText(gameResult: Player | "draw") {
-  return gameResult === "draw" ? <>Draw!</> : <>Player <span className={"player"}>{gameResult}</span> won.</>
+  return gameResult === "draw" ? (
+    <>Draw!</>
+  ) : (
+    <>
+      Player <span className={"player"}>{gameResult}</span> won.
+    </>
+  );
 }
 
 const Controls: React.FC<ControlsProps> = props => {

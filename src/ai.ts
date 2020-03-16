@@ -17,9 +17,10 @@ export function resolveNextMove(model: Model): Position {
 
   let bestValue: number;
   let bestPosition = validMoves[0];
-
+  let depth = 0;
   validMoves.forEach(position => {
-    let value = minimax(model, model.playerOnMove, position);
+    let value = minimax(model, model.playerOnMove, position, depth);
+    //console.log("For position", position, "value is:", value);
     if (!bestValue || value > bestValue) {
       bestValue = value;
       bestPosition = position;
@@ -29,29 +30,47 @@ export function resolveNextMove(model: Model): Position {
   return bestPosition;
 }
 
-function minimax(model: Model, player: Player, position: Position): number {
-  model = move(model, position);
-  const gameResult = model.gameResult;
+export function minimax(
+  model: Model,
+  player: Player,
+  position: Position,
+  depth: number
+): number {
+  let newModel = move(model, position);
+  const gameResult = newModel.gameResult;
 
+  //if move lead to AI player victory, we give positive reward
+  //reward is lessen by recursion depth to prefer early victory
   if (gameResult === player) {
-    return 1;
+    return 10 - depth;
   }
-
+  //if move lead to human victory, we give negative reward
+  //reward is increased by recursion depth to prefer later loss
   if (gameResult === opponent(player)) {
-    return -1;
+    return -10 + depth;
   }
 
   if (gameResult === "draw") {
     return 0;
   }
 
-  let value = 0;
-  //TODO recursively value all other moves
-  const validMoves = getValidMoves(model);
-  //TODO use reduce
-  validMoves.forEach(
-    position => (value = value + minimax(model, player, position))
-  );
+  //if game we are not in final state, we call minimax recursively until we reach one of final states
+  const nextMoves = getValidMoves(newModel);
+  let isAiOnMove = newModel.playerOnMove === player;
+  let value = isAiOnMove ? Number.MIN_VALUE : Number.MAX_VALUE;
+  depth++;
+
+  nextMoves.forEach(position => {
+    let positionValue = minimax(newModel, player, position, depth);
+    //for AI player we use maximum value from all next moves
+    if (isAiOnMove && positionValue > value) {
+      value = positionValue;
+    }
+    //for human player we use minimum value
+    if (!isAiOnMove && positionValue < value) {
+      value = positionValue;
+    }
+  });
 
   return value;
 }
