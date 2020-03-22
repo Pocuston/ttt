@@ -15,13 +15,13 @@ export function resolveNextMove(model: Model): Position {
     throw Error("No valid move available");
   }
 
-  let bestValue: number;
+  let bestValue = Number.MIN_SAFE_INTEGER;
   let bestPosition = validMoves[0];
   let depth = 0;
   validMoves.forEach(position => {
     let value = minimax(model, model.playerOnMove, position, depth);
     //console.log("For position", position, "value is:", value);
-    if (!bestValue || value > bestValue) {
+    if (value > bestValue) {
       bestValue = value;
       bestPosition = position;
     }
@@ -57,7 +57,7 @@ export function minimax(
   //if game we are not in final state, we call minimax recursively until we reach one of final states
   const nextMoves = getValidMoves(newModel);
   let isAiOnMove = newModel.playerOnMove === player;
-  let value = isAiOnMove ? Number.MIN_VALUE : Number.MAX_VALUE;
+  let value = isAiOnMove ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
   depth++;
 
   nextMoves.forEach(position => {
