@@ -72,7 +72,7 @@ export function minimax(
     }
   });
 
-  return value;
+  return value + (isAiOnMove ? -depth : depth);
 }
 
 function getValidMoves(model: Model): Position[] {
