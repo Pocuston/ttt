@@ -3,6 +3,9 @@ export const O = "O";
 
 export type Player = "X" | "O";
 
+export const humanPlayer = X;
+export const aiPlayer = O;
+
 export type Space = Player | null;
 
 export type Grid = Space[][];

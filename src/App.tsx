@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import "./App.css";
 
-import { createModel, Model, move, O, Player, Position, X } from "./model";
+import { aiPlayer, createModel, Model, move, Player, Position } from "./model";
 import Grid from "./Grid";
 import { resolveNextMove } from "./ai";
 import Controls from "./Controls";
 
-function initializeModel(): Model {
-  return createModel(getRandomPlayer());
-}
+function startGame(firstPlayer: Player) {
+  let model = createModel(firstPlayer);
 
-function getRandomPlayer(): Player {
-  const rand = Math.floor(Math.random() * 2);
-  return rand === 0 ? X : O;
+  if (firstPlayer === aiPlayer) {
+    let aiMove = resolveNextMove(model);
+    model = move(model, aiMove);
+  }
+
+  return model;
 }
 
 function makePlayerMove(model: Model, position: Position): Model {
@@ -29,16 +31,18 @@ function makePlayerMove(model: Model, position: Position): Model {
 }
 
 const App: React.FC = () => {
-  const [model, setModel] = useState(initializeModel());
+  const [model, setModel] = useState<Model | null>(null);
   return (
     <div className="App">
       <Controls
-        gameResult={model.gameResult}
-        onPlayAgainClick={() => setModel(initializeModel())}
+        model={model}
+        onGameStart={(firstPlayer) => setModel(startGame(firstPlayer))}
       />
       <Grid
         model={model}
-        onSpaceClick={position => setModel(makePlayerMove(model, position))}
+        onSpaceClick={(position) =>
+          model && setModel(makePlayerMove(model, position))
+        }
       />
     </div>
   );
