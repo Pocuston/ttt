@@ -1,12 +1,27 @@
 import React from "react";
 
 import "./Grid.css";
-import { isValidMove, Model, Position } from "./model";
+import { humanPlayer, isValidMove, Model, Position, Space } from "./model";
 
 type GridProps = {
   model: Model | null;
   onSpaceClick: (position: Position) => void;
 };
+
+function spaceClassName(
+  canMove: boolean,
+  rowIndex: number,
+  colIndex: number,
+  space: Space
+) {
+  let classByPlayer = "";
+  if (space !== null) {
+    classByPlayer = space === humanPlayer ? "human" : "ai";
+  }
+  return `space ${canMove ? "can-move" : ""} ${rowIndex < 2 ? "bottom" : ""} ${
+    colIndex < 2 ? "right" : ""
+  } ${classByPlayer}`;
+}
 
 const Grid: React.FC<GridProps> = (props: GridProps) => {
   const { model, onSpaceClick } = props;
@@ -21,7 +36,7 @@ const Grid: React.FC<GridProps> = (props: GridProps) => {
             return (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={"space " + (canMove ? "can-move" : "")}
+                className={spaceClassName(canMove, rowIndex, colIndex, col)}
                 onClick={() => canMove && onSpaceClick(position)}
               >
                 {col}

@@ -27,13 +27,13 @@ export function createModel(playerOnMove: Player): Model {
   const grid = [
     [null, null, null],
     [null, null, null],
-    [null, null, null]
+    [null, null, null],
   ];
   const gameResult = null;
   return {
     grid,
     playerOnMove,
-    gameResult
+    gameResult,
   };
 }
 
@@ -62,7 +62,7 @@ function markSpace(currentGrid: Grid, player: Player, position: Position) {
   const newGrid: Grid = [
     [...currentGrid[0]],
     [...currentGrid[1]],
-    [...currentGrid[2]]
+    [...currentGrid[2]],
   ];
   newGrid[position.row][position.col] = player;
   return newGrid;
@@ -97,7 +97,7 @@ function hasPlayerThreeInRow(
 
 function isAnySpaceLeft(grid: Grid) {
   return (
-    gridPositions.find(position => spaceAt(grid, position) === null) !==
+    gridPositions.find((position) => spaceAt(grid, position) === null) !==
     undefined
   );
 }
@@ -115,7 +115,7 @@ export const gridPositions: Position[] = [
   { row: 1, col: 2 },
   { row: 2, col: 0 },
   { row: 2, col: 1 },
-  { row: 2, col: 2 }
+  { row: 2, col: 2 },
 ];
 
 export const gridRows: Position[][] = [
@@ -123,43 +123,43 @@ export const gridRows: Position[][] = [
   [
     { row: 0, col: 0 },
     { row: 0, col: 1 },
-    { row: 0, col: 2 }
+    { row: 0, col: 2 },
   ],
   [
     { row: 1, col: 0 },
     { row: 1, col: 1 },
-    { row: 1, col: 2 }
+    { row: 1, col: 2 },
   ],
   [
     { row: 2, col: 0 },
     { row: 2, col: 1 },
-    { row: 2, col: 2 }
+    { row: 2, col: 2 },
   ],
   //columns
   [
     { row: 0, col: 0 },
     { row: 1, col: 0 },
-    { row: 2, col: 0 }
+    { row: 2, col: 0 },
   ],
   [
     { row: 0, col: 1 },
     { row: 1, col: 1 },
-    { row: 2, col: 1 }
+    { row: 2, col: 1 },
   ],
   [
     { row: 0, col: 2 },
     { row: 1, col: 2 },
-    { row: 2, col: 2 }
+    { row: 2, col: 2 },
   ],
   //diagonals
   [
     { row: 0, col: 0 },
     { row: 1, col: 1 },
-    { row: 2, col: 2 }
+    { row: 2, col: 2 },
   ],
   [
     { row: 0, col: 2 },
     { row: 1, col: 1 },
-    { row: 2, col: 0 }
-  ]
+    { row: 2, col: 0 },
+  ],
 ];

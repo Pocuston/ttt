@@ -8,30 +8,43 @@ type ControlsProps = {
 };
 
 function renderGameResult(gameResult: GameResult | undefined) {
-  return gameResult === "draw" ? (
-    <>Draw!</>
-  ) : (
-    <>
-      Player <span className={"player"}>{gameResult}</span> won.
-    </>
-  );
-}
-
-function renderStartGame(onGameStartClick: (firstPlayer: Player) => void) {
   return (
-    <div>
-      Who plays first?{" "}
-      <button onClick={() => onGameStartClick(humanPlayer)}>Me!</button>{" "}
-      <button onClick={() => onGameStartClick(aiPlayer)}>GLaDOS!</button>
+    <div className={"game-result"}>
+      {gameResult === "draw" ? (
+        <h1 className={"draw"}>Draw!</h1>
+      ) : (
+        <>
+          {gameResult === humanPlayer ? (
+            <h1 className={"you-win"}>You win!</h1>
+          ) : (
+            <h1 className={"you-loose"}>You loose!</h1>
+          )}
+        </>
+      )}
     </div>
   );
 }
 
-function renderPlayerOnMove(playerOnMove: Player | undefined) {
+function renderStartGame(
+  onGameStartClick: (firstPlayer: Player) => void,
+  firstGame: boolean = true
+) {
   return (
-    <span className={"on-move"}>
-      Player <span className={"player"}>{playerOnMove}</span> is on move.
+    <span>
+      <h1 className={"first-player"}>
+        {!firstGame && "Another game? "} Who plays first?
+      </h1>
+      <button onClick={() => onGameStartClick(humanPlayer)}>Me!</button>{" "}
+      <button onClick={() => onGameStartClick(aiPlayer)}>GlaDOS!</button>
     </span>
+  );
+}
+
+function renderPlayerOnMove(playerOnMove: Player | undefined) {
+  return playerOnMove === humanPlayer ? (
+    <h1 className={"your-move"}>Your move...</h1>
+  ) : (
+    <h1 className={"ai-move"}>GlaDOS is on move ...</h1>
   );
 }
 
@@ -45,11 +58,10 @@ const Controls: React.FC<ControlsProps> = (props) => {
       {newGame && renderStartGame(onGameStart)}
       {gameInProgress && renderPlayerOnMove(model?.playerOnMove)}
       {gameFinished && (
-        <>
+        <div>
           {renderGameResult(model?.gameResult)}
-          {" Another game? "}
-          {renderStartGame(onGameStart)}
-        </>
+          {renderStartGame(onGameStart, false)}
+        </div>
       )}
     </section>
   );

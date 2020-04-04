@@ -1,3 +1,4 @@
+/* Palette colors: https://www.w3schools.com/colors/tryit.asp?filename=trycolors_palettes19 */
 .controls {
   display: flex;
   align-items: center;
@@ -5,8 +6,34 @@
   height: 20vh;
 }
 
-.controls .game-result .player {
-  font-size: x-large;
-  font-weight: bold;
-  color: brown;
+.game-result {
+  display: block;
+}
+
+.you-win {
+  color: #587e76;
+}
+
+.you-loose {
+  color: #c1502e;
+}
+
+.draw {
+  color: #686256;
+}
+
+.your-move {
+  color: #587e76;
+}
+
+.ai-move {
+  color: #587e76;
+}
+
+.first-player {
+  color: #686256;
+}
+
+button {
+  background-color: #faebd7;
 }

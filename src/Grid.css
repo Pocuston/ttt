@@ -1,16 +1,14 @@
+/* Palette colors: https://www.w3schools.com/colors/tryit.asp?filename=trycolors_palettes19 */
 .grid {
   display: grid;
   grid-template-columns: 150px 150px 150px;
   grid-template-rows: 150px 150px 150px;
-  grid-column-gap: 4px;
-  grid-row-gap: 4px;
   justify-content: center;
   width: 100vw;
   height: 80vh;
 }
 
 .grid .space {
-  border: 2px solid red;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +16,23 @@
   font-weight: bold;
 }
 
+.grid .space.right {
+  border-right: 8px solid #686256;
+}
+
+.grid .space.bottom {
+  border-bottom: 8px solid #686256;
+}
+
 .grid .space.can-move:hover {
   cursor: pointer;
-  background-color: antiquewhite;
+  background-color: #faebd7;
+}
+
+.grid .space.human {
+  color: #587e76;
+}
+
+.grid .space.ai {
+  color: #c1502e;
 }
