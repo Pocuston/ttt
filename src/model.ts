@@ -37,16 +37,15 @@ export function createModel(playerOnMove: Player): Model {
   };
 }
 
-export function isValidMove(model: Model, position: Position): boolean {
-  return model.grid[position.row][position.col] === null;
+export function isValidMove(model: Model, move: Position): boolean {
+  return model.grid[move.row][move.col] === null;
 }
 
-//TODO prejmenovat na makeMove a v kodu pouzivat move misto position tam kde to dava smysl
-export function move(model: Model, position: Position): Model {
-  if (!isValidMove(model, position)) {
+export function makeMove(model: Model, move: Position): Model {
+  if (!isValidMove(model, move)) {
     throw Error("Invalid move");
   }
-  let grid = markSpace(model.grid, model.playerOnMove, position);
+  let grid = markSpace(model.grid, model.playerOnMove, move);
   let playerOnMove = opponent(model.playerOnMove);
   let gameResult = computeGameResult(grid);
 

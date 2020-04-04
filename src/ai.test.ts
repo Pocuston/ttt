@@ -1,17 +1,17 @@
-import { createModel, move, O, X } from "./model";
+import { createModel, makeMove, O, X } from "./model";
 import { resolveNextMove } from "./ai";
 
 test("AI does always valid move", () => {
   let model = createModel(O);
-  model = move(model, resolveNextMove(model));
-  model = move(model, resolveNextMove(model));
-  model = move(model, resolveNextMove(model));
-  model = move(model, resolveNextMove(model));
-  model = move(model, resolveNextMove(model));
-  model = move(model, resolveNextMove(model));
-  model = move(model, resolveNextMove(model));
-  model = move(model, resolveNextMove(model));
-  move(model, resolveNextMove(model));
+  model = makeMove(model, resolveNextMove(model));
+  model = makeMove(model, resolveNextMove(model));
+  model = makeMove(model, resolveNextMove(model));
+  model = makeMove(model, resolveNextMove(model));
+  model = makeMove(model, resolveNextMove(model));
+  model = makeMove(model, resolveNextMove(model));
+  model = makeMove(model, resolveNextMove(model));
+  model = makeMove(model, resolveNextMove(model));
+  makeMove(model, resolveNextMove(model));
 });
 
 //On situation below, O player chooses [0,2]
@@ -21,11 +21,11 @@ test("AI does always valid move", () => {
 test("AI takes shortest path to victory", () => {
   //X plays first, AI plays O second
   let model = createModel(X);
-  model = move(model, { row: 0, col: 1 });
-  model = move(model, { row: 1, col: 1 });
-  model = move(model, { row: 1, col: 2 });
-  model = move(model, { row: 2, col: 0 });
-  model = move(model, { row: 2, col: 1 });
+  model = makeMove(model, { row: 0, col: 1 });
+  model = makeMove(model, { row: 1, col: 1 });
+  model = makeMove(model, { row: 1, col: 2 });
+  model = makeMove(model, { row: 2, col: 0 });
+  model = makeMove(model, { row: 2, col: 1 });
 
   //O is on the move. It should choose {0,2} to win
   let aiNextMove = resolveNextMove(model);

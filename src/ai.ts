@@ -2,10 +2,10 @@ import {
   gridPositions,
   isValidMove,
   Model,
-  move,
+  makeMove,
   opponent,
   Player,
-  Position
+  Position,
 } from "./model";
 
 export function resolveNextMove(model: Model): Position {
@@ -16,27 +16,27 @@ export function resolveNextMove(model: Model): Position {
   }
 
   let bestValue = Number.MIN_SAFE_INTEGER;
-  let bestPosition = validMoves[0];
+  let bestMove = validMoves[0];
   let depth = 0;
-  validMoves.forEach(position => {
-    let value = minimax(model, model.playerOnMove, position, depth);
+  validMoves.forEach((move) => {
+    let value = minimax(model, model.playerOnMove, move, depth);
     //console.log("For position", position, "value is:", value);
     if (value > bestValue) {
       bestValue = value;
-      bestPosition = position;
+      bestMove = move;
     }
   });
 
-  return bestPosition;
+  return bestMove;
 }
 
 export function minimax(
   model: Model,
   player: Player,
-  position: Position,
+  move: Position,
   depth: number
 ): number {
-  let newModel = move(model, position);
+  let newModel = makeMove(model, move);
   const gameResult = newModel.gameResult;
 
   //if move lead to AI player victory, we give positive reward
@@ -60,15 +60,15 @@ export function minimax(
   let value = isAiOnMove ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
   depth++;
 
-  nextMoves.forEach(position => {
-    let positionValue = minimax(newModel, player, position, depth);
+  nextMoves.forEach((move) => {
+    let moveValue = minimax(newModel, player, move, depth);
     //for AI player we use maximum value from all next moves
-    if (isAiOnMove && positionValue > value) {
-      value = positionValue;
+    if (isAiOnMove && moveValue > value) {
+      value = moveValue;
     }
     //for human player we use minimum value
-    if (!isAiOnMove && positionValue < value) {
-      value = positionValue;
+    if (!isAiOnMove && moveValue < value) {
+      value = moveValue;
     }
   });
 
@@ -76,5 +76,5 @@ export function minimax(
 }
 
 function getValidMoves(model: Model): Position[] {
-  return gridPositions.filter(position => isValidMove(model, position));
+  return gridPositions.filter((position) => isValidMove(model, position));
 }

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import "./App.css";
 
-import { aiPlayer, createModel, Model, move, Player, Position } from "./model";
+import {
+  aiPlayer,
+  createModel,
+  Model,
+  makeMove,
+  Player,
+  Position,
+} from "./model";
 import Grid from "./Grid";
 import { resolveNextMove } from "./ai";
 import Controls from "./Controls";
@@ -11,14 +18,14 @@ function startGame(firstPlayer: Player) {
 
   if (firstPlayer === aiPlayer) {
     let aiMove = resolveNextMove(model);
-    model = move(model, aiMove);
+    model = makeMove(model, aiMove);
   }
 
   return model;
 }
 
 function makePlayerMove(model: Model, position: Position): Model {
-  model = move(model, position);
+  model = makeMove(model, position);
 
   if (model.gameResult !== null) {
     console.log("Game finished:", model);
@@ -26,7 +33,7 @@ function makePlayerMove(model: Model, position: Position): Model {
   }
 
   let aiMove = resolveNextMove(model);
-  model = move(model, aiMove);
+  model = makeMove(model, aiMove);
   return model;
 }
 
