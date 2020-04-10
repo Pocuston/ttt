@@ -31,11 +31,23 @@ function renderStartGame(
 ) {
   return (
     <span>
-      <h1 className={"first-player"}>
-        {!firstGame && "Another game? "} Who plays first?
-      </h1>
-      <button onClick={() => onGameStartClick(humanPlayer)}>Me!</button>{" "}
-      <button onClick={() => onGameStartClick(aiPlayer)}>GlaDOS!</button>
+      {firstGame ? (
+        <h1 className={"first-player"}>Who plays first?</h1>
+      ) : (
+        <h3 className={"first-player"}>Another game? Who plays first?</h3>
+      )}
+      <button
+        className={"button-primary"}
+        onClick={() => onGameStartClick(humanPlayer)}
+      >
+        Me!
+      </button>{" "}
+      <button
+        className={"button-primary"}
+        onClick={() => onGameStartClick(aiPlayer)}
+      >
+        GlaDOS!
+      </button>
     </span>
   );
 }
