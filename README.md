@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-Tic Tac Toe implemented using React & TypeScript and simple AI using minimax algorithm.
+React & TypeScript & minimax algorithm implementation for Tic Tac Toe game.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
