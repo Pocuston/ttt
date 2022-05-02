@@ -8,6 +8,10 @@ import {
   Position,
 } from "./model";
 
+/**
+ * Resolves AI next move using minimax
+ * @param model
+ */
 export function resolveNextMove(model: Model): Position {
   const validMoves = getValidMoves(model);
 
@@ -20,7 +24,6 @@ export function resolveNextMove(model: Model): Position {
   let depth = 0;
   validMoves.forEach((move) => {
     let value = minimax(model, model.playerOnMove, move, depth);
-    //console.log("For position", position, "value is:", value);
     if (value > bestValue) {
       bestValue = value;
       bestMove = move;
@@ -39,13 +42,13 @@ export function minimax(
   let newModel = makeMove(model, move);
   const gameResult = newModel.gameResult;
 
-  //if move lead to AI player victory, we give positive reward
-  //reward is lessen by recursion depth to prefer early victory
+  //if move lead to AI player victory, we give positive reward.
+  //Reward is lessen by recursion depth to prefer early victory
   if (gameResult === player) {
     return 10 - depth;
   }
-  //if move lead to human victory, we give negative reward
-  //reward is increased by recursion depth to prefer later loss
+  //If move lead to human victory, we give negative reward.
+  //Reward is increased by recursion depth to prefer later loss
   if (gameResult === opponent(player)) {
     return -10 + depth;
   }
@@ -60,8 +63,8 @@ export function minimax(
   let value = isAiOnMove ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
   depth++;
 
-  nextMoves.forEach((move) => {
-    let moveValue = minimax(newModel, player, move, depth);
+  nextMoves.forEach((nextMove) => {
+    let moveValue = minimax(newModel, player, nextMove, depth);
     //for AI player we use maximum value from all next moves
     if (isAiOnMove && moveValue > value) {
       value = moveValue;

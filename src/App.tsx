@@ -39,18 +39,21 @@ function makePlayerMove(model: Model, position: Position): Model {
 
 const App: React.FC = () => {
   const [model, setModel] = useState<Model | null>(null);
+
+  function handleGameStart(firstPlayer: Player) {
+    setModel(startGame(firstPlayer));
+  }
+
+  function handleSpaceClick(position: Position) {
+    setModel(
+      (currentModel) => currentModel && makePlayerMove(currentModel, position)
+    );
+  }
+
   return (
     <div className="App">
-      <Controls
-        model={model}
-        onGameStart={(firstPlayer) => setModel(startGame(firstPlayer))}
-      />
-      <Grid
-        model={model}
-        onSpaceClick={(position) =>
-          model && setModel(makePlayerMove(model, position))
-        }
-      />
+      <Controls model={model} onGameStart={handleGameStart} />
+      <Grid model={model} onSpaceClick={handleSpaceClick} />
     </div>
   );
 };

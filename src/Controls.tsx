@@ -2,27 +2,25 @@ import React from "react";
 import { aiPlayer, GameResult, humanPlayer, Model, Player } from "./model";
 import "./Controls.css";
 
-type ControlsProps = {
+/**
+ * Control component props
+ */
+export type ControlsProps = {
   model: Model | null;
   onGameStart: (firstPlayer: Player) => void;
 };
 
 function renderGameResult(gameResult: GameResult | undefined) {
-  return (
-    <div className={"game-result"}>
-      {gameResult === "draw" ? (
-        <h1 className={"draw"}>Draw!</h1>
-      ) : (
-        <>
-          {gameResult === humanPlayer ? (
-            <h1 className={"you-win"}>You win!</h1>
-          ) : (
-            <h1 className={"you-loose"}>You loose!</h1>
-          )}
-        </>
-      )}
-    </div>
-  );
+  switch (gameResult) {
+    case "draw":
+      return <h1 className={"draw"}>Draw!</h1>;
+    case humanPlayer:
+      return <h1 className={"you-win"}>You win!</h1>;
+    case aiPlayer:
+      return <h1 className={"you-loose"}>You loose!</h1>;
+    default:
+      return null;
+  }
 }
 
 function renderStartGame(
@@ -30,7 +28,7 @@ function renderStartGame(
   firstGame: boolean = true
 ) {
   return (
-    <span>
+    <div>
       {firstGame ? (
         <h1 className={"first-player"}>Who plays first?</h1>
       ) : (
@@ -46,9 +44,9 @@ function renderStartGame(
         className={"button-primary"}
         onClick={() => onGameStartClick(aiPlayer)}
       >
-        GlaDOS!
+        Computer!
       </button>
-    </span>
+    </div>
   );
 }
 
@@ -60,8 +58,7 @@ function renderPlayerOnMove(playerOnMove: Player | undefined) {
   );
 }
 
-const Controls: React.FC<ControlsProps> = (props) => {
-  const { onGameStart, model } = props;
+const Controls: React.FC<ControlsProps> = ({ onGameStart, model }) => {
   const newGame = model === null;
   const gameInProgress = model !== null && model.gameResult === null;
   const gameFinished = model !== null && model.gameResult !== null;
@@ -71,7 +68,9 @@ const Controls: React.FC<ControlsProps> = (props) => {
       {gameInProgress && renderPlayerOnMove(model?.playerOnMove)}
       {gameFinished && (
         <div>
-          {renderGameResult(model?.gameResult)}
+          <div className={"game-result"}>
+            {renderGameResult(model?.gameResult)}
+          </div>
           {renderStartGame(onGameStart, false)}
         </div>
       )}

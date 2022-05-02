@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 20vh;
+  margin: 8px;
 }
 
 .game-result {

@@ -3,7 +3,10 @@ import React from "react";
 import "./Grid.css";
 import { humanPlayer, isValidMove, Model, Position, Space } from "./model";
 
-type GridProps = {
+/**
+ * Grid component props
+ */
+export type GridProps = {
   model: Model | null;
   onSpaceClick: (position: Position) => void;
 };
@@ -23,8 +26,7 @@ function spaceClassName(
   } ${classByPlayer}`;
 }
 
-const Grid: React.FC<GridProps> = (props: GridProps) => {
-  const { model, onSpaceClick } = props;
+const Grid: React.FC<GridProps> = ({ model, onSpaceClick }) => {
   return (
     <div className={"grid"}>
       {model &&
